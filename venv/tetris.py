@@ -2,32 +2,32 @@ import pygame
 import time
 
 
-WIDTH = 700  # ширина игрового окна
-HEIGHT = 800 # высота игрового окна
+WIDTH = 10  # ширина игрового окна
+HEIGHT = 20 # высота игрового окна
+TILE = 45
+GAME_RES = WIDTH * TILE, HEIGHT * TILE
 FPS = 3 # частота кадров в секунду
 
 pygame.init()
 
-# pygame.mixer.init()  # для звука
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 pygame.display.set_caption("TETRIZ")
 clock = pygame.time.Clock()
 
-x = WIDTH // 2
-y = 600
-run = True
+
+grid = [pygame.Rect(x * TILE, y * TILE, TILE, TILE) for x in range(WIDTH) for y in range(HEIGHT)]
+
+
+
 
 while True:
-    clock.tick(FPS)
-    pygame.draw.circle(screen, (100, 50, 0), (x, y), (100))
-    pygame.display.update()
-    pygame.draw.circle(screen, (0, 0, 0), (x, y), (100))
+    screen = pygame.display.set_mode((GAME_RES))
 
-    y -= 50
-    if y == 100:
-        break
-
-while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            exit()
+
+    [pygame.draw.rect(screen, (40, 40, 40), i_rect, 1) for i_rect in grid]
+
+    pygame.display.flip()
+    clock.tick(FPS)
